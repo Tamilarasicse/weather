@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>Document</title>
+</head>
+<style>
+    body{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin:0;
+        background-color:#7c7c7c2b;
+        /* background-image: url(w/image.jpg); */
+        background-image: url(https://burst.shopifycdn.com/photos/cloudy-sky-from-above.jpg?width=1850&format=pjpg&exif=1&iptc=1);
+        background-repeat: no-repeat;
+        font-family: 'open sans', sans-serif;
+    }
+    .card{
+        background-color: #7c7c7c2b;
+        color: white;
+        /* background-image: url(https://images.unsplash.com/photo-1498496294664-d9372eb521f3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80);
+        background-position:fixed;
+        background-size: cover; */
+        padding: 2em;
+        border-radius: 30px;
+        max-width:100%;
+        margin: 1em;
+    }
+    .search{
+        /* display: flex; */
+        align-items: center;
+        justify-content: center;
+    }
+    input{
+        border: none;
+        outline: none;
+        padding: 5px;
+        border-radius: 18px;
+        background: #7c7c7c2b;
+        color: white;
+        font-family:inherit;
+    }
+    button{
+        border-radius:50% ;
+        border: none;
+        height: 25px;
+        margin: 2px;
+        transition: 0.2sec;
+    }
+    button:hover{
+        background: #7c7c7c2b;;
+    }
+    .city{
+        margin-left: 60px;
+    }
+    #place{
+        margin-top: 0;
+        margin-left: 50px;
+    }
+    #description{
+        font-size: 25px;
+        margin-left: 30px;
+    }
+    .bottom{
+        display: flex;
+        gap:20px;
+    }
+</style>
+
+<body>
+    <div class="card">
+        
+        <div class="search">
+   
+    <input type="text" id="input" placeholder="SEARCH BY LOCATION">
+    <button id="btn"><i class="fa-solid fa-magnifying-glass"></i></button>
+
+
+    <h2 class="city"></h2>
+    <h1 id="place"></h1>
+    <h3 id="description"></h3>
+    <div class="bottom">
+    <h3 id="name">name </h3>
+    <h3 id="humidity">humidity</h3>
+    <h3 id="wind">speed</h3>
+</div>
+</div>
+    <script>
+        let input = document.getElementById("input");
+
+        let btn = document.getElementById("btn");
+        btn.addEventListener("click", function () {
+        
+
+
+            fetch('https://api.openweathermap.org/data/2.5/weather?q=' + input.value + '&units=metric&appid=fc769a5605837af7fe06844eadb034df')
+                .then(response => {
+                    return response.json();
+                })
+                .then(data => {
+                    console.log(data);
+                    document.getElementById("place").innerHTML = data.main.temp + "°c";
+                    document.getElementById("name").innerHTML = data.name ;
+                    document.getElementById("description").innerHTML = data.weather[0].description;
+                    document.getElementById("humidity").innerHTML = data.main.humidity+"%" ;
+                    document.getElementById("wind").innerHTML = data.wind.speed + "km";
+                })
+        })
+    </script>
+</body>
+
+</html>
